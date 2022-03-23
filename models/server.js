@@ -25,8 +25,8 @@ class Server {
     }
 
     listen() {
-        this.app.listen(process.env.PORT || 8080, ()  => {
-            console.log(`Server up -> ${ process.env.PORT || 8080 }`);
+        this.app.listen(process.env.PORT || 3000, ()  => {
+            console.log(`Server up -> ${ process.env.PORT || 3000 }`);
         });
     }
 
