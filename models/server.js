@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const colors = require('colors');
+
+const { dbConnection } = require('../config/db');
 
 class Server {
 
@@ -7,10 +10,16 @@ class Server {
         this.app = express();
         // CRUD API
         this.path = '/api/users';
+        // Connect to Database
+        this.connectDB();
         // Middlewares
         this.middlewares();
         // Routes 
         this.routes();
+    }
+     
+    async connectDB() {
+        await dbConnection();
     }
 
     middlewares() {
@@ -26,7 +35,7 @@ class Server {
 
     listen() {
         this.app.listen(process.env.PORT || 3000, ()  => {
-            console.log(`Server up -> ${ process.env.PORT || 3000 }`);
+            console.log(colors.bold.green(`Server up -> ${ process.env.PORT || 3000 }`));
         });
     }
 
