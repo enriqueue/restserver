@@ -7,6 +7,9 @@ const { getController,
         deleteController } = require('../controllers/routesCtrl');
 
 const { validateFields } = require('../middlewares/validate-fields');
+const { validateJWT } = require('../middlewares/validateJWT');
+const { validateRoles } = require('../middlewares/validateRoles');
+
 const { isRoleInDB, isEmailInDB, isIDInDB } = require('../helpers/db-validators');
 
 const router = Router();
@@ -31,6 +34,8 @@ router.put('/:id',[
 ], putController);
 
 router.delete('/:id',[
+    validateJWT,
+    validateRoles,
     check('id','ID is not a valid mongo id').isMongoId(),
     check('id').custom( isIDInDB ),
     validateFields

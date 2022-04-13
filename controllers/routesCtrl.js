@@ -5,14 +5,14 @@ const User = require('../models/user');
 
 const getController = async(req = request, res = response) => {
 
-    const { limit = 15, desde = 0 } = req.query;
+    const { limit = 15, from = 0 } = req.query;
     const query = { status: true }
 
     const [total, users] = await Promise.all([
         User.countDocuments( query ),
         User.find( query )   
             .limit( limit )
-            .skip( desde )
+            .skip( from )
     ]);
 
     res.json( {total, users} );
@@ -54,9 +54,11 @@ const deleteController = async(req = request, res = response) => {
     
     const { id } = req.params;
 
+    const loggedUser = req.loggedUser;
+
     const user = await User.findByIdAndUpdate(id, { status: false });
 
-    res.json( user );
+    res.json({ user, loggedUser });
 }
 
 module.exports = {

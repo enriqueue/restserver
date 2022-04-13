@@ -9,7 +9,9 @@ class Server {
     constructor() {
         this.app = express();
         // CRUD API
-        this.path = '/api/users';
+        this.UserPath = '/api/users';
+        // Login Path
+        this.AuthPath = '/api/auth';
         // Connect to Database
         this.connectDB();
         // Middlewares
@@ -30,7 +32,8 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.path, require('../routes/routes'));
+        this.app.use(this.AuthPath, require('../routes/auth'));
+        this.app.use(this.UserPath, require('../routes/routes'));
     }
 
     listen() {
